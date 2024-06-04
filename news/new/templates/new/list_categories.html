@@ -1,0 +1,9 @@
+<div class="box border border-secondary rounded" style="height: 100%; width: 300px; margin-top: 20px;">
+    <p style="margin-left: 10px; margin-top: 10px;">Категории:</p>
+    {% for item in categories %}
+    <div class="nev_btn bg-secondary rounded" style="width: 280px; margin-left: 10px;">
+        <a href="{% url 'category' item.pk %}"><p style="margin-left: 10px; cursor: pointer;">{{ item.title }}</p></a>
+    </div>
+    {% endfor %}
+</div>
+
