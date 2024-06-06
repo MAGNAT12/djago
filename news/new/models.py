@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class News(models.Model):
@@ -8,7 +9,10 @@ class News(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано ли')
-    category = models.ForeignKey('Category', on_delete=models.PROTECT,verbose_name='Категория', null=True) ## мы добавили новое поле. Здесь СУБД нас ограничивает созданием новой записи, и не позволит создать новое поле, потому что наше поле не заполнено как то, поэтому мы используем null=True. Поэтому желательно всегда сначала заранее продумать и построить модели, чтобы не сталкиваться с такими трудностями.
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория', null=True)
+
+    def get_absolute_url(self):
+        return reverse('view_news', kwargs={'news_id': self.pk})
 
     def __str__(self):
         return self.title
@@ -19,8 +23,13 @@ class News(models.Model):
         ordering = ['-created_at',]
 
 
+
 class Category(models.Model):
-    title = models.CharField(max_length=150, db_index=True, verbose_name='Наименование категории') ## db_index делает поле более индексированным для базы данных
+    title = models.CharField(max_length=150, verbose_name='Наименование категории', db_index=True)
+
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'category_id': self.pk})
 
     def __str__(self):
         return self.title
@@ -28,4 +37,4 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-    ordering = ['-title']
+        ordering = ['-title',]

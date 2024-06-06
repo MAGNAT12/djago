@@ -2,8 +2,7 @@
     <p style="margin-left: 10px; margin-top: 10px;">Категории:</p>
     {% for item in categories %}
     <div class="nev_btn bg-secondary rounded" style="width: 280px; margin-left: 10px;">
-        <a href="{% url 'category' item.pk %}"><p style="margin-left: 10px; cursor: pointer;">{{ item.title }}</p></a>
+        <a href="{{ item.get_absolute_url }}"><p style="margin-left: 10px; cursor: pointer;">{{ item.title }}</p></a>
     </div>
     {% endfor %}
 </div>
-

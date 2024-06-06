@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ news_item.title }} {% endblock %}
+
+{% block sidebar %}
+{% include 'inc/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+        <div class="boxes" style="margin-left: 600px; margin-top: -200px; margin-right: 100px;">
+            
+            <div class="box border border-secondary rounded" style="width: 600px; height: 100%;">
+                <div>
+                    <p class="bg-secondary border border-secondary rounded-top" style="width: 600px; height: 30px;">
+                        Категория: <a href="{{ news_item.category.get_absolute_url }}">{{ news_item.category }}</a></p>
+                </div>
+                <p class="mx-auto p-3">{{ news_item.title }}</p>
+                {% if news_item.photo %}
+                <img src="{{ news_item.photo.url }}" class="mx-auto p-2"
+                style="width: 200px; height: 150px;">   
+                {% else %}
+                <img src="https://i.pinimg.com/736x/18/49/90/18499075c298138ac6608732caca321f.jpg" class="mx-auto p-2"
+                style="width: 200px; height: 150px;">
+                {% endif %}
+                <div style="margin-left: 250px; margin-top: -200px;">
+                    <p> {{ news_item.content }}</p>
+                    <p style="margin-top: 30px;">{{ news_item.created_at|date:"Y-m-d H:i" }}</p>
+                </div>
+            </div> 
+            <br>
+        </div>
+{% endblock %}
